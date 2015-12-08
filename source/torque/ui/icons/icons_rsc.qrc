@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="tpd">
+    <file>close6.png</file>
+    <file>check64.png</file>
+    <file>add18.png</file>
+    <file>minus.png</file>
+  </qresource>
+</RCC>
