@@ -183,22 +183,22 @@
               </property>
               <item>
                <property name="text">
-                <string>Final Fantasy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
                 <string>Arabian Nights</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Square Enix</string>
+                <string>Bollywood</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Bollywood</string>
+                <string>Final Fantasy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Square Enix</string>
                </property>
               </item>
              </widget>
