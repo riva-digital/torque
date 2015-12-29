@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="tpd">
+    <file>cloud384.png</file>
+    <file>cloud-storage3.png</file>
+    <file>copy12.png</file>
+    <file>folder232.png</file>
+    <file>magnifying47.png</file>
+    <file>no_preview.png</file>
     <file>close6.png</file>
     <file>check64.png</file>
     <file>add18.png</file>

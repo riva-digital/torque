@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>895</width>
+    <height>403</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Torque User Dashboard (Beta)</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_5">
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget_3" native="true">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>35</height>
+       </size>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <property name="leftMargin">
+        <number>3</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>3</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Welcome, Mukund Dhananjay</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>337</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2">
+        <widget class="QWidget" name="widget" native="true">
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="horizontalSpacing">
+           <number>3</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_4">
+            <property name="maximumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="icons/icons_rsc.qrc">:/tpd/magnifying47.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>Search</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QWidget" name="widget_2" native="true">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>488</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <widget class="QToolButton" name="toolButton">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons_rsc.qrc">
+            <normaloff>:/tpd/add18.png</normaloff>:/tpd/add18.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="toolButton_6">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons_rsc.qrc">
+            <normaloff>:/tpd/copy12.png</normaloff>:/tpd/copy12.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QToolButton" name="toolButton_4">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons_rsc.qrc">
+            <normaloff>:/tpd/cloud-storage3.png</normaloff>:/tpd/cloud-storage3.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QToolButton" name="toolButton_2">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons_rsc.qrc">
+            <normaloff>:/tpd/folder232.png</normaloff>:/tpd/folder232.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QToolButton" name="toolButton_5">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/icons_rsc.qrc">
+            <normaloff>:/tpd/cloud384.png</normaloff>:/tpd/cloud384.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="6">
+         <widget class="QTreeWidget" name="treeWidget">
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="headerHidden">
+           <bool>false</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Filename</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Version</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Revision</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>User</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Machine</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Comment</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Due On</string>
+           </property>
+          </column>
+          <item>
+           <property name="text">
+            <string>Arabian Nights</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>SCN01_SHT12_LIT</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>SCN01_SHT11_LIT</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>SCN01_SHT10_LIT</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>SCN01_SHT10_LIT_RIM</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="text">
+              <string>4</string>
+             </property>
+             <property name="text">
+              <string>mdhananjay</string>
+             </property>
+             <property name="text">
+              <string>gfx61</string>
+             </property>
+             <property name="text">
+              <string>something</string>
+             </property>
+             <property name="text">
+              <string>Submitted For Review</string>
+             </property>
+             <property name="text">
+              <string>18/12/2015</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>SCN01_SHT10_LIT_OCC</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="text">
+              <string>mdhananjay</string>
+             </property>
+             <property name="text">
+              <string>gfx61</string>
+             </property>
+             <property name="text">
+              <string>something</string>
+             </property>
+             <property name="text">
+              <string>Submitted For Review</string>
+             </property>
+             <property name="text">
+              <string>18/12/2015</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>SCN01_SHT10_LIT_CHAR</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="text">
+              <string>5</string>
+             </property>
+             <property name="text">
+              <string>mdhananjay</string>
+             </property>
+             <property name="text">
+              <string>gfx61</string>
+             </property>
+             <property name="text">
+              <string>something</string>
+             </property>
+             <property name="text">
+              <string>Submitted For Review</string>
+             </property>
+             <property name="text">
+              <string>18/12/2015</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>SCN01_SHT10_LIT_BG</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="text">
+              <string>3</string>
+             </property>
+             <property name="text">
+              <string>mdhananjay</string>
+             </property>
+             <property name="text">
+              <string>gfx61</string>
+             </property>
+             <property name="text">
+              <string>something</string>
+             </property>
+             <property name="text">
+              <string>Submitted For Review</string>
+             </property>
+             <property name="text">
+              <string>18/12/2015</string>
+             </property>
+            </item>
+           </item>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="widget_4" native="true">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTreeWidget" name="treeWidget_2">
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="headerHidden">
+           <bool>false</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Version</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Revision</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Comment</string>
+           </property>
+          </column>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>Blah</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>Bleh</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>Bluh</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="icons/icons_rsc.qrc"/>
+ </resources>
+ <connections/>
+</ui>
