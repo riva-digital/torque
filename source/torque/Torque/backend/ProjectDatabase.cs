@@ -123,7 +123,7 @@ namespace Torque.backend
             // Syntax:
             // SELECT (column1, column2) FROM (table1, table2) WHERE columnVals[keys]=columnVals[value] AND columnVals[keys]=columnVals[value]
             // TO-DO: Add support for OR, AND-OR, OR-AND queries in the WHERE clause
-            Hashtable result = new Hashtable;
+            Hashtable result = new Hashtable();
             return result;
         }
 
