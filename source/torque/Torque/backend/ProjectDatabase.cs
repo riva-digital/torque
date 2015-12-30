@@ -115,13 +115,16 @@ namespace Torque.backend
         {
             // Syntax:
             // UPDATE tableName SET columnVals[key]=columnVals[value] WHERE keyVals[key]=keyVals[value] AND keyVals[key]=keyVals[value];
+            // TO-DO: Add support for OR, AND-OR, OR-AND queries in the WHERE clause
         }
 
-        public List<string> [] Select(List<string> columns, List<string> tables, Hashtable columnVals)
+        public Hashtable Select(List<string> columns, string tableName, Hashtable columnVals)
         {
-            // TO-DO: Add support for OR, AND-OR, OR-AND queries
-            List<string> [] retString = new List<string>[10];
-            return retString;
+            // Syntax:
+            // SELECT (column1, column2) FROM (table1, table2) WHERE columnVals[keys]=columnVals[value] AND columnVals[keys]=columnVals[value]
+            // TO-DO: Add support for OR, AND-OR, OR-AND queries in the WHERE clause
+            Hashtable result = new Hashtable;
+            return result;
         }
 
         private static string Base64Encode(string text)

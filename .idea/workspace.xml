@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f7d7089b-a579-40d9-88d9-5a4984c8cdc5" name="Default" comment="" />
+    <list default="true" id="f7d7089b-a579-40d9-88d9-5a4984c8cdc5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/torque/Torque/backend/ProjectDatabase.cs" afterPath="$PROJECT_DIR$/source/torque/Torque/backend/ProjectDatabase.cs" />
+    </list>
     <ignored path="torque.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -259,7 +261,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1932" height="1056" extended-state="1" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
