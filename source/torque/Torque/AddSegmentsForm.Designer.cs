@@ -66,7 +66,6 @@
             this.applyBtn.TabIndex = 0;
             this.applyBtn.Text = "Apply";
             this.applyBtn.UseVisualStyleBackColor = true;
-            this.applyBtn.Click += new System.EventHandler(this.applyBtn_Click);
             // 
             // addAnotherSegBtn
             // 

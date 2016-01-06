@@ -215,6 +215,7 @@
             this.remCatBtn.BackgroundImage = global::Torque.Properties.Resources.minus;
             this.remCatBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.remCatBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remCatBtn.Enabled = false;
             this.remCatBtn.Location = new System.Drawing.Point(187, 0);
             this.remCatBtn.Margin = new System.Windows.Forms.Padding(0);
             this.remCatBtn.Name = "remCatBtn";
@@ -227,12 +228,14 @@
             this.addCatBtn.BackgroundImage = global::Torque.Properties.Resources.add18;
             this.addCatBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addCatBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addCatBtn.Enabled = false;
             this.addCatBtn.Location = new System.Drawing.Point(155, 0);
             this.addCatBtn.Margin = new System.Windows.Forms.Padding(0);
             this.addCatBtn.Name = "addCatBtn";
             this.addCatBtn.Size = new System.Drawing.Size(32, 32);
             this.addCatBtn.TabIndex = 2;
             this.addCatBtn.UseVisualStyleBackColor = true;
+            this.addCatBtn.Click += new System.EventHandler(this.addCatBtn_Click);
             // 
             // assetCategoryList
             // 
@@ -284,6 +287,7 @@
             this.remAstBtn.BackgroundImage = global::Torque.Properties.Resources.minus;
             this.remAstBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.remAstBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remAstBtn.Enabled = false;
             this.remAstBtn.Location = new System.Drawing.Point(187, 0);
             this.remAstBtn.Margin = new System.Windows.Forms.Padding(0);
             this.remAstBtn.Name = "remAstBtn";
@@ -296,6 +300,7 @@
             this.addAstBtn.BackgroundImage = global::Torque.Properties.Resources.add18;
             this.addAstBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addAstBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addAstBtn.Enabled = false;
             this.addAstBtn.Location = new System.Drawing.Point(155, 0);
             this.addAstBtn.Margin = new System.Windows.Forms.Padding(0);
             this.addAstBtn.Name = "addAstBtn";
@@ -353,6 +358,7 @@
             this.remGrpBtn.BackgroundImage = global::Torque.Properties.Resources.minus;
             this.remGrpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.remGrpBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remGrpBtn.Enabled = false;
             this.remGrpBtn.Location = new System.Drawing.Point(187, 0);
             this.remGrpBtn.Margin = new System.Windows.Forms.Padding(0);
             this.remGrpBtn.Name = "remGrpBtn";
@@ -365,6 +371,7 @@
             this.AddGrpBtn.BackgroundImage = global::Torque.Properties.Resources.add18;
             this.AddGrpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.AddGrpBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AddGrpBtn.Enabled = false;
             this.AddGrpBtn.Location = new System.Drawing.Point(155, 0);
             this.AddGrpBtn.Margin = new System.Windows.Forms.Padding(0);
             this.AddGrpBtn.Name = "AddGrpBtn";
@@ -422,6 +429,7 @@
             this.remTskBtn.BackgroundImage = global::Torque.Properties.Resources.minus;
             this.remTskBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.remTskBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remTskBtn.Enabled = false;
             this.remTskBtn.Location = new System.Drawing.Point(188, 0);
             this.remTskBtn.Margin = new System.Windows.Forms.Padding(0);
             this.remTskBtn.Name = "remTskBtn";
@@ -434,6 +442,7 @@
             this.addTskBtn.BackgroundImage = global::Torque.Properties.Resources.add18;
             this.addTskBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addTskBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addTskBtn.Enabled = false;
             this.addTskBtn.Location = new System.Drawing.Point(156, 0);
             this.addTskBtn.Margin = new System.Windows.Forms.Padding(0);
             this.addTskBtn.Name = "addTskBtn";
