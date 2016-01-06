@@ -29,10 +29,6 @@ namespace Torque
 
         backend.ProjectDatabase projDB = new backend.ProjectDatabase("173.194.234.148", "don", "riva-root", "EzioOnAThursday");
         public Hashtable segmentIds = new Hashtable();
-        public Dictionary<int, Dictionary<string, int>> categoryIds = new Dictionary<int, Dictionary<string, int>>();
-        public Dictionary<int, Dictionary<string, int>> groupIds = new Dictionary<int, Dictionary<string, int>>();
-        public Dictionary<int, Dictionary<string, int>> assetIds = new Dictionary<int, Dictionary<string, int>>();
-        public Dictionary<int, Dictionary<string, int>> taskIds = new Dictionary<int, Dictionary<string, int>>();
         
         public TorqueMainWindow()
         {
@@ -48,9 +44,10 @@ namespace Torque
 
         private void segmentNameList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            assetCategoryList.Items.Clear();
-            assetGroupsList.Items.Clear();
-            assetList.Items.Clear();
+            this.assetCategoryList.Items.Clear();
+            this.assetGroupsList.Items.Clear();
+            this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
 
             RefreshCategoriesList();
             this.addCatBtn.Enabled = true;
@@ -59,10 +56,11 @@ namespace Torque
         
         public void RefreshSegmentList()
         {
-            segmentNameList.Items.Clear();
-            assetCategoryList.Items.Clear();
-            assetGroupsList.Items.Clear();
-            assetList.Items.Clear();
+            this.segmentNameList.Items.Clear();
+            this.assetCategoryList.Items.Clear();
+            this.assetGroupsList.Items.Clear();
+            this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
 
             List<string> columnNames = new List<string>();
             Hashtable keyVals = new Hashtable();
@@ -77,11 +75,6 @@ namespace Torque
                     {
                         segmentIds.Add(segment["segmentname"], segment["segmentid"]);
                     }
-                    if (!categoryIds.ContainsKey(Convert.ToInt32(segment["segmentid"])))
-                    {
-                        Dictionary<string, int> segCatId = new Dictionary<string,int>();
-                        categoryIds.Add(Convert.ToInt32(segment["segmentid"]), segCatId);
-                    }
                 }
             }
             catch (Exception ex)
@@ -95,10 +88,21 @@ namespace Torque
 
             this.addCatBtn.Enabled = false;
             this.remCatBtn.Enabled = false;
+            this.addGrpBtn.Enabled = false;
+            this.remGrpBtn.Enabled = false;
+            this.addAstBtn.Enabled = false;
+            this.remAstBtn.Enabled = false;
+            this.addTskBtn.Enabled = false;
+            this.remTskBtn.Enabled = false;
         }
 
         public void RefreshCategoriesList()
         {
+            this.assetCategoryList.Items.Clear();
+            this.assetGroupsList.Items.Clear();
+            this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
+
             string selSegment = segmentNameList.SelectedItem.ToString();
 
             projDB.OpenConnection();
@@ -108,22 +112,12 @@ namespace Torque
                 Hashtable keyVals = new Hashtable();
 
                 columnNames.Add("CategoryName");
-                columnNames.Add("CategoryID");
                 keyVals.Add("SegmentName", selSegment);
 
                 List<Hashtable> categories = projDB.Select(columnNames, "segment_categories_details", keyVals);
                 foreach (Hashtable category in categories)
                 {
                     assetCategoryList.Items.Add(category["CategoryName"].ToString());
-                    if (!this.categoryIds[Convert.ToInt32(segmentIds[selSegment])].ContainsKey(category["CategoryName"].ToString()))
-                    {
-                        this.categoryIds[Convert.ToInt32(segmentIds[selSegment])].Add(category["CategoryName"].ToString(), Convert.ToInt32(category["CategoryID"]));
-                    }
-                    if (!this.groupIds.ContainsKey(Convert.ToInt32(category["CategoryID"])))
-                    {
-                        Dictionary<string, int> groupDetails = new Dictionary<string, int>();
-                        this.groupIds.Add(Convert.ToInt32(category["CategoryID"]), groupDetails);
-                    }
                 }
             }
             catch (Exception ex)
@@ -134,10 +128,21 @@ namespace Torque
             {
                 projDB.CloseConnection();
             }
+
+            this.addGrpBtn.Enabled = false;
+            this.remGrpBtn.Enabled = false;
+            this.addAstBtn.Enabled = false;
+            this.remAstBtn.Enabled = false;
+            this.addTskBtn.Enabled = false;
+            this.remTskBtn.Enabled = false;
         }
 
         public void RefreshGroupsList()
         {
+            this.assetGroupsList.Items.Clear();
+            this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
+
             string selSegment = segmentNameList.SelectedItem.ToString();
             string selAssetCat = assetCategoryList.SelectedItem.ToString();
 
@@ -148,7 +153,6 @@ namespace Torque
                 Hashtable keyVals = new Hashtable();
 
                 columnNames.Add("GroupName");
-                columnNames.Add("GroupID");
                 keyVals.Add("CategoryName", selAssetCat);
                 keyVals.Add("SegmentName", selSegment);
 
@@ -156,17 +160,6 @@ namespace Torque
                 foreach (Hashtable group in groups)
                 {
                     assetGroupsList.Items.Add(group["GroupName"].ToString());
-                    int catId = this.categoryIds[Convert.ToInt32(this.segmentIds[selSegment])][selAssetCat];
-                    int grpId = Convert.ToInt32(group["GroupID"]);
-                    if (!this.groupIds[catId].ContainsKey(group["GroupName"].ToString()))
-                    {
-                        this.groupIds[catId].Add(group["GroupName"].ToString(), grpId);
-                    }
-                    if(!this.assetIds.ContainsKey(grpId))
-                    {
-                        Dictionary<string, int> assetDetails = new Dictionary<string, int>();
-                        this.assetIds.Add(grpId, assetDetails);
-                    }
                 }
             }
             catch (Exception ex)
@@ -177,10 +170,18 @@ namespace Torque
             {
                 projDB.CloseConnection();
             }
+
+            this.addAstBtn.Enabled = false;
+            this.remAstBtn.Enabled = false;
+            this.addTskBtn.Enabled = false;
+            this.remTskBtn.Enabled = false;
         }
 
         public void RefreshAssetList()
         {
+            this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
+
             string selSegment = this.segmentNameList.SelectedItem.ToString();
             string selAssetCat = this.assetCategoryList.SelectedItem.ToString();
             string selAssetGrp = this.assetGroupsList.SelectedItem.ToString();
@@ -192,9 +193,6 @@ namespace Torque
                 Hashtable keyVals = new Hashtable();
 
                 columnNames.Add("AssetName");
-                columnNames.Add("AssetID");
-                columnNames.Add("CategoryID");
-                columnNames.Add("AssetGroupID");
                 keyVals.Add("AssetGroupName", selAssetGrp);
                 keyVals.Add("CategoryName", selAssetCat);
                 keyVals.Add("SegmentName", selSegment);
@@ -203,17 +201,6 @@ namespace Torque
                 foreach (Hashtable asset in assets)
                 {
                     assetList.Items.Add(asset["AssetName"].ToString());
-                    int catId = this.categoryIds[Convert.ToInt32(this.segmentIds[selSegment])][selAssetCat];
-                    int grpId = Convert.ToInt32(asset["GroupID"]);
-                    if (!this.groupIds[catId].ContainsKey(asset["GroupName"].ToString()))
-                    {
-                        this.groupIds[catId].Add(asset["GroupName"].ToString(), grpId);
-                    }
-                    if (!this.assetIds.ContainsKey(grpId))
-                    {
-                        Dictionary<string, int> assetDetails = new Dictionary<string, int>();
-                        this.assetIds.Add(grpId, assetDetails);
-                    }
                 }
             }
             catch (Exception ex)
@@ -224,25 +211,30 @@ namespace Torque
             {
                 projDB.CloseConnection();
             }
+
+            this.addTskBtn.Enabled = false;
+            this.remTskBtn.Enabled = false;
         }
 
         public void RefreshTaskList()
         {
-
+            this.taskList.Items.Clear();
         }
 
         private void segmentNameList_DoubleClick(object sender, EventArgs e)
         {
-            AddSegmentsForm addSeg = new AddSegmentsForm(this, mode: "edit");
+            AddSegmentsForm addSeg = new AddSegmentsForm(this, mode: WindowMode.Edit);
             addSeg.ShowDialog();
         }
 
         private void assetCategoryList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            assetGroupsList.Items.Clear();
-            assetList.Items.Clear();
+            this.assetGroupsList.Items.Clear();
+            this.assetList.Items.Clear();
 
             RefreshGroupsList();
+            this.addGrpBtn.Enabled = true;
+            this.remGrpBtn.Enabled = true;
         }
 
         private void assetCategoryList_DoubleClick(object sender, EventArgs e)
@@ -252,7 +244,11 @@ namespace Torque
 
         private void assetGroupsList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.assetList.Items.Clear();
 
+            RefreshAssetList();
+            this.addAstBtn.Enabled = true;
+            this.remAstBtn.Enabled = true;
         }
 
         private void assetGroupsList_DoubleClick(object sender, EventArgs e)
@@ -283,6 +279,18 @@ namespace Torque
         private void addCatBtn_Click(object sender, EventArgs e)
         {
             AddComponents addCompWin = new AddComponents(this);
+            addCompWin.ShowDialog();
+        }
+
+        private void addGrpBtn_Click(object sender, EventArgs e)
+        {
+            AddComponents addCompWin = new AddComponents(this, addComponent: ComponentType.Group);
+            addCompWin.ShowDialog();
+        }
+
+        private void addAstBtn_Click(object sender, EventArgs e)
+        {
+            AddComponents addCompWin = new AddComponents(this, addComponent: ComponentType.Asset);
             addCompWin.ShowDialog();
         }
     }

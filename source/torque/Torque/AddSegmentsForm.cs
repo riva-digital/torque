@@ -17,7 +17,7 @@ namespace Torque
         int selSegmentId = 0;
         backend.ProjectDatabase projDB = new backend.ProjectDatabase("173.194.234.148", "don", "riva-root", "EzioOnAThursday");
 
-        public AddSegmentsForm(TorqueMainWindow tmw, string mode="add")
+        public AddSegmentsForm(TorqueMainWindow tmw, WindowMode mode = WindowMode.Add)
         {
             InitializeComponent();
             this.mainWindow = tmw;
@@ -30,7 +30,7 @@ namespace Torque
             this.notesTxtBox.Enabled = false;
             this.addAnotherSegBtn.Enabled = false;
 
-            if (mode == "edit")
+            if (mode == WindowMode.Edit)
             {
                 // In edit mode, block out some of the inputs
                 // and show the default values from the database here.

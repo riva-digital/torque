@@ -48,7 +48,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.remGrpBtn = new System.Windows.Forms.Button();
-            this.AddGrpBtn = new System.Windows.Forms.Button();
+            this.addGrpBtn = new System.Windows.Forms.Button();
             this.assetGroupsList = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -113,6 +113,7 @@
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel3, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel6, 4, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
@@ -307,6 +308,7 @@
             this.addAstBtn.Size = new System.Drawing.Size(32, 32);
             this.addAstBtn.TabIndex = 2;
             this.addAstBtn.UseVisualStyleBackColor = true;
+            this.addAstBtn.Click += new System.EventHandler(this.addAstBtn_Click);
             // 
             // assetList
             // 
@@ -341,7 +343,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel3.Controls.Add(this.remGrpBtn, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.AddGrpBtn, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.addGrpBtn, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.assetGroupsList, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -366,18 +368,19 @@
             this.remGrpBtn.TabIndex = 3;
             this.remGrpBtn.UseVisualStyleBackColor = true;
             // 
-            // AddGrpBtn
+            // addGrpBtn
             // 
-            this.AddGrpBtn.BackgroundImage = global::Torque.Properties.Resources.add18;
-            this.AddGrpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.AddGrpBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AddGrpBtn.Enabled = false;
-            this.AddGrpBtn.Location = new System.Drawing.Point(155, 0);
-            this.AddGrpBtn.Margin = new System.Windows.Forms.Padding(0);
-            this.AddGrpBtn.Name = "AddGrpBtn";
-            this.AddGrpBtn.Size = new System.Drawing.Size(32, 32);
-            this.AddGrpBtn.TabIndex = 2;
-            this.AddGrpBtn.UseVisualStyleBackColor = true;
+            this.addGrpBtn.BackgroundImage = global::Torque.Properties.Resources.add18;
+            this.addGrpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.addGrpBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addGrpBtn.Enabled = false;
+            this.addGrpBtn.Location = new System.Drawing.Point(155, 0);
+            this.addGrpBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.addGrpBtn.Name = "addGrpBtn";
+            this.addGrpBtn.Size = new System.Drawing.Size(32, 32);
+            this.addGrpBtn.TabIndex = 2;
+            this.addGrpBtn.UseVisualStyleBackColor = true;
+            this.addGrpBtn.Click += new System.EventHandler(this.addGrpBtn_Click);
             // 
             // assetGroupsList
             // 
@@ -519,25 +522,25 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button remAstBtn;
         private System.Windows.Forms.Button addAstBtn;
-        private System.Windows.Forms.ListBox assetList;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button remGrpBtn;
-        private System.Windows.Forms.Button AddGrpBtn;
-        private System.Windows.Forms.ListBox assetGroupsList;
+        private System.Windows.Forms.Button addGrpBtn;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button remCatBtn;
         private System.Windows.Forms.Button addCatBtn;
-        private System.Windows.Forms.ListBox assetCategoryList;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button remTskBtn;
         private System.Windows.Forms.Button addTskBtn;
-        private System.Windows.Forms.ListBox taskList;
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.ListBox segmentNameList;
+        public System.Windows.Forms.ListBox assetList;
+        public System.Windows.Forms.ListBox assetGroupsList;
+        public System.Windows.Forms.ListBox assetCategoryList;
+        public System.Windows.Forms.ListBox taskList;
 
 
 
