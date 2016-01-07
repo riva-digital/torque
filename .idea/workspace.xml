@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f7d7089b-a579-40d9-88d9-5a4984c8cdc5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/torque/Torque/backend/ProjectDatabase.cs" afterPath="$PROJECT_DIR$/source/torque/Torque/backend/ProjectDatabase.cs" />
-    </list>
+    <list default="true" id="f7d7089b-a579-40d9-88d9-5a4984c8cdc5" name="Default" comment="" />
     <ignored path="torque.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

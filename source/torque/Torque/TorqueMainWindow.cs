@@ -44,7 +44,11 @@ namespace Torque
             this.donToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.donToolStripMenuItem.Text = "Don";
             this.donToolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem_Click);
+
+            // The default database is Don, so make sure the title bar
+            // reflects that
             this.donToolStripMenuItem.Checked = true;
+            this.Text = "Torque - Don";
             // 
             // raOneToolStripMenuItem
             // 
@@ -266,7 +270,8 @@ namespace Torque
 
         private void assetCategoryList_DoubleClick(object sender, EventArgs e)
         {
-            
+            this.addTaskWin = new AddTasks(this);
+            this.addTaskWin.ShowDialog();
         }
 
         private void assetGroupsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -327,13 +332,11 @@ namespace Torque
 
         private void addTskBtn_Click(object sender, EventArgs e)
         {
-            this.addTaskWin = new AddTasks(this);
-            this.addTaskWin.ShowDialog();
+            
         }
 
         private void toolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(sender.ToString());
             ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
             if (!menuItem.Checked)
             {
@@ -345,6 +348,8 @@ namespace Torque
 
                 this.SetProjDatabase(menuItem.ToString().ToLower());
                 this.RefreshSegmentList();
+
+                this.Text = "Torque - " + menuItem.ToString();
             }
         }
     }

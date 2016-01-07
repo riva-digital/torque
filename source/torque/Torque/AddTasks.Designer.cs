@@ -93,7 +93,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AddTasks";
-            this.Text = "Add Tasks";
+            this.Text = "Add Departments";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
