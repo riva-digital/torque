@@ -15,7 +15,6 @@ namespace Torque
     {
         TorqueMainWindow mainWindow;
         int selSegmentId = 0;
-        backend.ProjectDatabase projDB = new backend.ProjectDatabase("173.194.234.148", "don", "riva-root", "EzioOnAThursday");
 
         public AddSegmentsForm(TorqueMainWindow tmw, WindowMode mode = WindowMode.Add)
         {
@@ -68,9 +67,9 @@ namespace Torque
             Hashtable segId = new Hashtable();
             segId.Add("segmentid", this.selSegmentId);
 
-            this.projDB.OpenConnection();
-            List<Hashtable> segmentDetails = this.projDB.Select(segCols, "segments", segId);
-            this.projDB.CloseConnection();
+            this.mainWindow.projDB.OpenConnection();
+            List<Hashtable> segmentDetails = this.mainWindow.projDB.Select(segCols, "segments", segId);
+            this.mainWindow.projDB.CloseConnection();
 
             this.nameTxtBox.Text = segmentDetails[0]["segmentname"].ToString();
             this.codeTxtBox.Text = segmentDetails[0]["segmentcode"].ToString();
@@ -114,9 +113,9 @@ namespace Torque
             updates.Add("segmentdeliverables", this.deliverablesTxtBox.Text);
             //updates.Add("segmentnotes", this.notesTxtBox.Text);
 
-            this.projDB.OpenConnection();
-            this.projDB.Update("segments", updates, keys);
-            this.projDB.CloseConnection();
+            this.mainWindow.projDB.OpenConnection();
+            this.mainWindow.projDB.Update("segments", updates, keys);
+            this.mainWindow.projDB.CloseConnection();
 
             this.Close();
         }
@@ -186,10 +185,10 @@ namespace Torque
             segmentHash.Add("segmentstartdate", segStartDate);
             segmentHash.Add("segmentenddate", segEndDate);
 
-            this.projDB.OpenConnection();
+            this.mainWindow.projDB.OpenConnection();
             try
             {
-                this.projDB.Insert("segments", segmentHash);
+                this.mainWindow.projDB.Insert("segments", segmentHash);
             }
             catch(Exception ex)
             {
@@ -197,7 +196,7 @@ namespace Torque
             }
             finally
             {
-                this.projDB.CloseConnection();
+                this.mainWindow.projDB.CloseConnection();
             }
         }
 

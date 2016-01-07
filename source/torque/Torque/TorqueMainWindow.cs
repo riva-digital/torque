@@ -21,19 +21,45 @@ namespace Torque
     {
         Category,
         Group,
-        Asset
+        Asset,
+        Department
     }
 
     public partial class TorqueMainWindow : Form
     {
 
-        backend.ProjectDatabase projDB = new backend.ProjectDatabase("173.194.234.148", "don", "riva-root", "EzioOnAThursday");
+        public backend.ProjectDatabase projDB;
         public Hashtable segmentIds = new Hashtable();
+        public AddTasks addTaskWin;
         
         public TorqueMainWindow()
-        {
+        {            
             InitializeComponent();
+            // Init the Torque Toolbar
+
+            // 
+            // donToolStripMenuItem
+            // 
+            this.donToolStripMenuItem.Name = "donToolStripMenuItem";
+            this.donToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.donToolStripMenuItem.Text = "Don";
+            this.donToolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem_Click);
+            this.donToolStripMenuItem.Checked = true;
+            // 
+            // raOneToolStripMenuItem
+            // 
+            this.raOneToolStripMenuItem.Name = "raOneToolStripMenuItem";
+            this.raOneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.raOneToolStripMenuItem.Text = "RaOne";
+            this.raOneToolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem_Click);
+
+            this.SetProjDatabase();
             RefreshSegmentList();
+        }
+
+        public void SetProjDatabase(string projectName = "don")
+        {
+            this.projDB = new backend.ProjectDatabase("173.194.86.207", projectName, "riva-root", "EzioOnAThursday");
         }
 
         private void addSegmentsBtn_Click(object sender, EventArgs e)
@@ -64,10 +90,10 @@ namespace Torque
 
             List<string> columnNames = new List<string>();
             Hashtable keyVals = new Hashtable();
-            projDB.OpenConnection();
+            this.projDB.OpenConnection();
             try
             {
-                List<Hashtable> segments = projDB.Select(columnNames, "segments", keyVals);
+                List<Hashtable> segments = this.projDB.Select(columnNames, "segments", keyVals);
                 foreach (Hashtable segment in segments)
                 {
                     segmentNameList.Items.Add(segment["segmentname"].ToString());
@@ -83,7 +109,7 @@ namespace Torque
             }
             finally
             {
-                projDB.CloseConnection();
+                this.projDB.CloseConnection();
             }
 
             this.addCatBtn.Enabled = false;
@@ -105,7 +131,7 @@ namespace Torque
 
             string selSegment = segmentNameList.SelectedItem.ToString();
 
-            projDB.OpenConnection();
+            this.projDB.OpenConnection();
             try
             {
                 List<string> columnNames = new List<string>();
@@ -114,7 +140,7 @@ namespace Torque
                 columnNames.Add("CategoryName");
                 keyVals.Add("SegmentName", selSegment);
 
-                List<Hashtable> categories = projDB.Select(columnNames, "segment_categories_details", keyVals);
+                List<Hashtable> categories = this.projDB.Select(columnNames, "segment_categories_details", keyVals);
                 foreach (Hashtable category in categories)
                 {
                     assetCategoryList.Items.Add(category["CategoryName"].ToString());
@@ -126,7 +152,7 @@ namespace Torque
             }
             finally
             {
-                projDB.CloseConnection();
+                this.projDB.CloseConnection();
             }
 
             this.addGrpBtn.Enabled = false;
@@ -146,7 +172,7 @@ namespace Torque
             string selSegment = segmentNameList.SelectedItem.ToString();
             string selAssetCat = assetCategoryList.SelectedItem.ToString();
 
-            projDB.OpenConnection();
+            this.projDB.OpenConnection();
             try
             {
                 List<string> columnNames = new List<string>();
@@ -156,7 +182,7 @@ namespace Torque
                 keyVals.Add("CategoryName", selAssetCat);
                 keyVals.Add("SegmentName", selSegment);
 
-                List<Hashtable> groups = projDB.Select(columnNames, "segment_groups_details", keyVals);
+                List<Hashtable> groups = this.projDB.Select(columnNames, "segment_groups_details", keyVals);
                 foreach (Hashtable group in groups)
                 {
                     assetGroupsList.Items.Add(group["GroupName"].ToString());
@@ -168,7 +194,7 @@ namespace Torque
             }
             finally
             {
-                projDB.CloseConnection();
+                this.projDB.CloseConnection();
             }
 
             this.addAstBtn.Enabled = false;
@@ -186,7 +212,7 @@ namespace Torque
             string selAssetCat = this.assetCategoryList.SelectedItem.ToString();
             string selAssetGrp = this.assetGroupsList.SelectedItem.ToString();
 
-            projDB.OpenConnection();
+            this.projDB.OpenConnection();
             try
             {
                 List<string> columnNames = new List<string>();
@@ -209,7 +235,7 @@ namespace Torque
             }
             finally
             {
-                projDB.CloseConnection();
+                this.projDB.CloseConnection();
             }
 
             this.addTskBtn.Enabled = false;
@@ -231,6 +257,7 @@ namespace Torque
         {
             this.assetGroupsList.Items.Clear();
             this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
 
             RefreshGroupsList();
             this.addGrpBtn.Enabled = true;
@@ -245,6 +272,7 @@ namespace Torque
         private void assetGroupsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.assetList.Items.Clear();
+            this.taskList.Items.Clear();
 
             RefreshAssetList();
             this.addAstBtn.Enabled = true;
@@ -258,7 +286,10 @@ namespace Torque
 
         private void assetList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.taskList.Items.Clear();
 
+            this.addTskBtn.Enabled = true;
+            this.remTskBtn.Enabled = true;
         }
 
         private void assetList_DoubleClick(object sender, EventArgs e)
@@ -292,6 +323,29 @@ namespace Torque
         {
             AddComponents addCompWin = new AddComponents(this, addComponent: ComponentType.Asset);
             addCompWin.ShowDialog();
+        }
+
+        private void addTskBtn_Click(object sender, EventArgs e)
+        {
+            this.addTaskWin = new AddTasks(this);
+            this.addTaskWin.ShowDialog();
+        }
+
+        private void toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            if (!menuItem.Checked)
+            {
+                foreach (ToolStripMenuItem item in this.projectToolStripMenuItem.DropDownItems)
+                {
+                    item.Checked = false;
+                }
+                menuItem.Checked = true;
+
+                this.SetProjDatabase(menuItem.ToString().ToLower());
+                this.RefreshSegmentList();
+            }
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Torque
         /// segmentid, categoryid, groupid
         /// </summary>
         List<int> foreignKeyList = new List<int>();
-        backend.ProjectDatabase projDB = new backend.ProjectDatabase("173.194.234.148", "don", "riva-root", "EzioOnAThursday");
 
         public AddComponents(TorqueMainWindow tmw, WindowMode mode = WindowMode.Add, ComponentType addComponent = ComponentType.Category)
         {
@@ -30,6 +29,8 @@ namespace Torque
             this.mainWindow = tmw;
             this.mode = mode;
             this.compType = addComponent;
+
+            this.Text = "Add " + this.compType.ToString();
         }
 
         private void applyBtn_Click(object sender, EventArgs e)
@@ -48,10 +49,10 @@ namespace Torque
                     insertHash.Add("categorycode", this.codeTxtBox.Text);
                     insertHash.Add("categoryisrelevant", this.relevanceCB.Checked);
 
-                    this.projDB.OpenConnection();
+                    this.mainWindow.projDB.OpenConnection();
                     try
                     {
-                        this.projDB.Insert("asset_categories", insertHash);
+                        this.mainWindow.projDB.Insert("asset_categories", insertHash);
                     }
                     catch (Exception ex)
                     {
@@ -59,7 +60,7 @@ namespace Torque
                     }
                     finally
                     {
-                        this.projDB.CloseConnection();
+                        this.mainWindow.projDB.CloseConnection();
                         this.mainWindow.RefreshCategoriesList();
                     }
                 }
@@ -71,10 +72,10 @@ namespace Torque
                     insertHash.Add("groupcode", this.codeTxtBox.Text);
                     insertHash.Add("groupisrelevant", this.relevanceCB.Checked);
 
-                    this.projDB.OpenConnection();
+                    this.mainWindow.projDB.OpenConnection();
                     try
                     {
-                        this.projDB.Insert("asset_groups", insertHash);
+                        this.mainWindow.projDB.Insert("asset_groups", insertHash);
                     }
                     catch (Exception ex)
                     {
@@ -82,11 +83,11 @@ namespace Torque
                     }
                     finally
                     {
-                        this.projDB.CloseConnection();
+                        this.mainWindow.projDB.CloseConnection();
                         this.mainWindow.RefreshGroupsList();
                     }
                 }
-                else
+                else if (this.compType == ComponentType.Asset)
                 {
                     insertHash.Add("segmentid", this.foreignKeyList[0]);
                     insertHash.Add("categoryid", this.foreignKeyList[1]);
@@ -95,10 +96,10 @@ namespace Torque
                     insertHash.Add("assetcode", this.codeTxtBox.Text);
                     insertHash.Add("assetisrelevant", this.relevanceCB.Checked);
 
-                    this.projDB.OpenConnection();
+                    this.mainWindow.projDB.OpenConnection();
                     try
                     {
-                        this.projDB.Insert("assets", insertHash);
+                        this.mainWindow.projDB.Insert("assets", insertHash);
                     }
                     catch (Exception ex)
                     {
@@ -106,8 +107,28 @@ namespace Torque
                     }
                     finally
                     {
-                        this.projDB.CloseConnection();
+                        this.mainWindow.projDB.CloseConnection();
                         this.mainWindow.RefreshAssetList();
+                    }
+                }                
+                else if (this.compType == ComponentType.Department)
+                {
+                    insertHash.Add("departmentname", this.nameTxtBox.Text);
+                    insertHash.Add("departmentcode", this.codeTxtBox.Text);
+
+                    this.mainWindow.projDB.OpenConnection();
+                    try
+                    {
+                        this.mainWindow.projDB.Insert("departments", insertHash);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        this.mainWindow.projDB.CloseConnection();
+                        this.mainWindow.addTaskWin.RefreshDepartmentList();
                     }
                 }
             }
@@ -135,11 +156,11 @@ namespace Torque
             if (this.compType == ComponentType.Group)
             {
                 columnNames.Add("CategoryID");
-                fkParams.Add("CategoryName", this.mainWindow.assetCategoryList.SelectedItem.ToString());             
-                projDB.OpenConnection();
+                fkParams.Add("CategoryName", this.mainWindow.assetCategoryList.SelectedItem.ToString());
+                this.mainWindow.projDB.OpenConnection();
                 try
                 {
-                    IDs = projDB.Select(columnNames, "segment_categories_details", fkParams);
+                    IDs = this.mainWindow.projDB.Select(columnNames, "segment_categories_details", fkParams);
                 }
                 catch (Exception ex)
                 {
@@ -147,7 +168,7 @@ namespace Torque
                 }
                 finally
                 {
-                    projDB.CloseConnection();
+                    this.mainWindow.projDB.CloseConnection();
                 }
                 this.foreignKeyList.Add(Convert.ToInt32(IDs[0]["CategoryID"]));
                 
@@ -158,10 +179,10 @@ namespace Torque
                 columnNames.Add("GroupID");
                 fkParams.Add("CategoryName", this.mainWindow.assetCategoryList.SelectedItem.ToString());
                 fkParams.Add("GroupName", this.mainWindow.assetGroupsList.SelectedItem.ToString());
-                projDB.OpenConnection();
+                this.mainWindow.projDB.OpenConnection();
                 try
                 {
-                    IDs = projDB.Select(columnNames, "segment_groups_details", fkParams);
+                    IDs = this.mainWindow.projDB.Select(columnNames, "segment_groups_details", fkParams);
                 }
                 catch (Exception ex)
                 {
@@ -169,12 +190,11 @@ namespace Torque
                 }
                 finally
                 {
-                    projDB.CloseConnection();
+                    this.mainWindow.projDB.CloseConnection();
                 }
                 this.foreignKeyList.Add(Convert.ToInt32(IDs[0]["CategoryID"]));
                 this.foreignKeyList.Add(Convert.ToInt32(IDs[0]["GroupID"]));
             }
-
         }
 
         private bool VerifyData()
@@ -205,10 +225,10 @@ namespace Torque
                 List<Hashtable> categories = new List<Hashtable>();
                 selHashTab.Add("SegmentName", this.mainWindow.segmentNameList.SelectedItem.ToString());
                 selHashTab.Add("CategoryName", this.nameTxtBox.Text);
-                this.projDB.OpenConnection();
+                this.mainWindow.projDB.OpenConnection();
                 try
                 {
-                    categories = this.projDB.Select(selColumns, "segment_categories_details", selHashTab);
+                    categories = this.mainWindow.projDB.Select(selColumns, "segment_categories_details", selHashTab);
 
                 }
                 catch (Exception ex)
@@ -217,7 +237,7 @@ namespace Torque
                 }
                 finally
                 {
-                    this.projDB.CloseConnection();
+                    this.mainWindow.projDB.CloseConnection();
                 }
                 if (categories.Count > 0)
                 {
@@ -231,10 +251,10 @@ namespace Torque
                 selHashTab.Add("SegmentName", this.mainWindow.segmentNameList.SelectedItem.ToString());
                 selHashTab.Add("CategoryName", this.mainWindow.assetCategoryList.SelectedItem.ToString());
                 selHashTab.Add("GroupName", this.nameTxtBox.Text);
-                this.projDB.OpenConnection();
+                this.mainWindow.projDB.OpenConnection();
                 try
                 {
-                    groups = this.projDB.Select(selColumns, "segment_groups_details", selHashTab);
+                    groups = this.mainWindow.projDB.Select(selColumns, "segment_groups_details", selHashTab);
 
                 }
                 catch (Exception ex)
@@ -243,7 +263,7 @@ namespace Torque
                 }
                 finally
                 {
-                    this.projDB.CloseConnection();
+                    this.mainWindow.projDB.CloseConnection();
                 }
                 if (groups.Count > 0)
                 {
@@ -251,17 +271,17 @@ namespace Torque
                     return false;
                 }
             }
-            else
+            else if (this.compType == ComponentType.Asset)
             {
                 List<Hashtable> assets = new List<Hashtable>();
                 selHashTab.Add("SegmentName", this.mainWindow.segmentNameList.SelectedItem.ToString());
                 selHashTab.Add("CategoryName", this.mainWindow.assetCategoryList.SelectedItem.ToString());
                 selHashTab.Add("AssetGroupName", this.mainWindow.assetGroupsList.SelectedItem.ToString());
                 selHashTab.Add("AssetName", this.nameTxtBox.Text);
-                this.projDB.OpenConnection();
+                this.mainWindow.projDB.OpenConnection();
                 try
                 {
-                    assets = this.projDB.Select(selColumns, "segment_asset_details", selHashTab);
+                    assets = this.mainWindow.projDB.Select(selColumns, "segment_asset_details", selHashTab);
 
                 }
                 catch (Exception ex)
@@ -270,11 +290,37 @@ namespace Torque
                 }
                 finally
                 {
-                    this.projDB.CloseConnection();
+                    this.mainWindow.projDB.CloseConnection();
                 }
                 if (assets.Count > 0)
                 {
                     MessageBox.Show("The item " + this.nameTxtBox.Text + " already exists in the segment " + this.mainWindow.segmentNameList.SelectedItem.ToString() + ", category " + this.mainWindow.assetCategoryList.SelectedItem.ToString() + " and group " + this.mainWindow.assetGroupsList.SelectedItem.ToString());
+                    return false;
+                }
+            }
+            else if (this.compType == ComponentType.Department)
+            {
+                List<Hashtable> departments = new List<Hashtable>();
+                selHashTab.Add("departmentname", this.nameTxtBox.Text);
+                selHashTab.Add("departmentcode", this.codeTxtBox.Text);
+
+                this.mainWindow.projDB.OpenConnection();
+                try
+                {
+                    departments = this.mainWindow.projDB.Select(selColumns, "departments", selHashTab);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    this.mainWindow.projDB.CloseConnection();
+                }
+                if (departments.Count > 0)
+                {
+                    MessageBox.Show("The item " + this.nameTxtBox.Text + " already exists.");
                     return false;
                 }
             }

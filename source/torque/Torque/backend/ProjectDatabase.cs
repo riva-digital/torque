@@ -14,7 +14,7 @@ namespace Torque.backend
     ///  Currently, this connects directly to the database, should try and make
     ///  a REST sort of a thing here. Using parameters to build the SQL command.
     /// </summary>
-    class ProjectDatabase
+    public class ProjectDatabase
     {
         private MySqlConnection connection;
         private string server;

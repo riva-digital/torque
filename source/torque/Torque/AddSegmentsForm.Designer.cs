@@ -339,6 +339,7 @@
             this.Controls.Add(this.applyBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AddSegmentsForm";
+            this.ShowInTaskbar = false;
             this.Text = "Add Segments";
             ((System.ComponentModel.ISupportInitialize)(this.frmrateSpnr)).EndInit();
             this.ResumeLayout(false);

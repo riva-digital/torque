@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddComponents));
             this.label2 = new System.Windows.Forms.Label();
             this.codeTxtBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -128,7 +129,9 @@
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.applyBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddComponents";
+            this.ShowInTaskbar = false;
             this.Text = "AddComponents";
             this.ResumeLayout(false);
             this.PerformLayout();

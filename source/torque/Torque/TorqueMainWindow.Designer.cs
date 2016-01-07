@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TorqueMainWindow));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -56,6 +57,10 @@
             this.addTskBtn = new System.Windows.Forms.Button();
             this.taskList = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.donToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.raOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -67,6 +72,7 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -81,6 +87,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel1.Controls.Add(this.menuStrip1);
             // 
             // splitContainer1.Panel2
             // 
@@ -93,9 +100,9 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1126, 243);
+            this.dataGridView1.Size = new System.Drawing.Size(1126, 219);
             this.dataGridView1.TabIndex = 0;
             // 
             // tableLayoutPanel5
@@ -171,6 +178,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.segmentNameList, 3);
             this.segmentNameList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.segmentNameList.FormattingEnabled = true;
+            this.segmentNameList.ItemHeight = 15;
             this.segmentNameList.Location = new System.Drawing.Point(1, 33);
             this.segmentNameList.Margin = new System.Windows.Forms.Padding(1);
             this.segmentNameList.Name = "segmentNameList";
@@ -243,6 +251,7 @@
             this.tableLayoutPanel2.SetColumnSpan(this.assetCategoryList, 3);
             this.assetCategoryList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.assetCategoryList.FormattingEnabled = true;
+            this.assetCategoryList.ItemHeight = 15;
             this.assetCategoryList.Location = new System.Drawing.Point(1, 33);
             this.assetCategoryList.Margin = new System.Windows.Forms.Padding(1);
             this.assetCategoryList.Name = "assetCategoryList";
@@ -315,6 +324,7 @@
             this.tableLayoutPanel4.SetColumnSpan(this.assetList, 3);
             this.assetList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.assetList.FormattingEnabled = true;
+            this.assetList.ItemHeight = 15;
             this.assetList.Location = new System.Drawing.Point(1, 33);
             this.assetList.Margin = new System.Windows.Forms.Padding(1);
             this.assetList.Name = "assetList";
@@ -387,6 +397,7 @@
             this.tableLayoutPanel3.SetColumnSpan(this.assetGroupsList, 3);
             this.assetGroupsList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.assetGroupsList.FormattingEnabled = true;
+            this.assetGroupsList.ItemHeight = 15;
             this.assetGroupsList.Location = new System.Drawing.Point(1, 33);
             this.assetGroupsList.Margin = new System.Windows.Forms.Padding(1);
             this.assetGroupsList.Name = "assetGroupsList";
@@ -452,12 +463,14 @@
             this.addTskBtn.Size = new System.Drawing.Size(32, 32);
             this.addTskBtn.TabIndex = 2;
             this.addTskBtn.UseVisualStyleBackColor = true;
+            this.addTskBtn.Click += new System.EventHandler(this.addTskBtn_Click);
             // 
             // taskList
             // 
             this.tableLayoutPanel6.SetColumnSpan(this.taskList, 3);
             this.taskList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.taskList.FormattingEnabled = true;
+            this.taskList.ItemHeight = 15;
             this.taskList.Location = new System.Drawing.Point(1, 33);
             this.taskList.Margin = new System.Windows.Forms.Padding(1);
             this.taskList.Name = "taskList";
@@ -478,6 +491,26 @@
             this.label5.Text = "Tasks";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.projectToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.menuStrip1.Size = new System.Drawing.Size(1126, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // projectToolStripMenuItem
+            // 
+            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.donToolStripMenuItem,
+            this.raOneToolStripMenuItem});
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.projectToolStripMenuItem.Text = "Project";
+            // 
             // TorqueMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -485,6 +518,8 @@
             this.ClientSize = new System.Drawing.Size(1128, 531);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1144, 569);
             this.MinimumSize = new System.Drawing.Size(1144, 569);
@@ -492,6 +527,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Torque";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -507,6 +543,8 @@
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -541,6 +579,10 @@
         public System.Windows.Forms.ListBox assetGroupsList;
         public System.Windows.Forms.ListBox assetCategoryList;
         public System.Windows.Forms.ListBox taskList;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem donToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem raOneToolStripMenuItem;
 
 
 
