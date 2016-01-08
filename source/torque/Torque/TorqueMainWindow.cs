@@ -74,14 +74,17 @@ namespace Torque
 
         private void segmentNameList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.assetCategoryList.Items.Clear();
-            this.assetGroupsList.Items.Clear();
-            this.assetList.Items.Clear();
-            this.taskList.Items.Clear();
+            if (this.segmentNameList.SelectedItems.Count > 0)
+            {
+                this.assetCategoryList.Items.Clear();
+                this.assetGroupsList.Items.Clear();
+                this.assetList.Items.Clear();
+                this.taskList.Items.Clear();
 
-            RefreshCategoriesList();
-            this.addCatBtn.Enabled = true;
-            this.remCatBtn.Enabled = true;
+                RefreshCategoriesList();
+                this.addCatBtn.Enabled = true;
+                this.remCatBtn.Enabled = true;
+            }            
         }
         
         public void RefreshSegmentList()
@@ -249,6 +252,38 @@ namespace Torque
         public void RefreshTaskList()
         {
             this.taskList.Items.Clear();
+
+            string selSegment = this.segmentNameList.SelectedItem.ToString();
+            string selAssetCat = this.assetCategoryList.SelectedItem.ToString();
+            string selAssetGrp = this.assetGroupsList.SelectedItem.ToString();
+            string selAsset = this.assetList.SelectedItem.ToString();
+
+            this.projDB.OpenConnection();
+            try
+            {
+                List<string> columnNames = new List<string>();
+                Hashtable keyVals = new Hashtable();
+
+                columnNames.Add("TaskName");
+                keyVals.Add("AssetName", selAsset);
+                keyVals.Add("GroupName", selAssetGrp);
+                keyVals.Add("CategoryName", selAssetCat);
+                keyVals.Add("SegmentName", selSegment);
+
+                List<Hashtable> assets = projDB.Select(columnNames, "segment_task_details", keyVals);
+                foreach (Hashtable asset in assets)
+                {
+                    this.taskList.Items.Add(asset["TaskName"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.projDB.CloseConnection();
+            }
         }
 
         private void segmentNameList_DoubleClick(object sender, EventArgs e)
@@ -259,13 +294,16 @@ namespace Torque
 
         private void assetCategoryList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.assetGroupsList.Items.Clear();
-            this.assetList.Items.Clear();
-            this.taskList.Items.Clear();
+            if (this.assetCategoryList.SelectedItems.Count > 0)
+            {
+                this.assetGroupsList.Items.Clear();
+                this.assetList.Items.Clear();
+                this.taskList.Items.Clear();
 
-            RefreshGroupsList();
-            this.addGrpBtn.Enabled = true;
-            this.remGrpBtn.Enabled = true;
+                RefreshGroupsList();
+                this.addGrpBtn.Enabled = true;
+                this.remGrpBtn.Enabled = true;
+            }
         }
 
         private void assetCategoryList_DoubleClick(object sender, EventArgs e)
@@ -276,12 +314,15 @@ namespace Torque
 
         private void assetGroupsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.assetList.Items.Clear();
-            this.taskList.Items.Clear();
+            if (this.assetGroupsList.SelectedItems.Count > 0)
+            {
+                this.assetList.Items.Clear();
+                this.taskList.Items.Clear();
 
-            RefreshAssetList();
-            this.addAstBtn.Enabled = true;
-            this.remAstBtn.Enabled = true;
+                RefreshAssetList();
+                this.addAstBtn.Enabled = true;
+                this.remAstBtn.Enabled = true;
+            }
         }
 
         private void assetGroupsList_DoubleClick(object sender, EventArgs e)
@@ -291,10 +332,14 @@ namespace Torque
 
         private void assetList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.taskList.Items.Clear();
+            if (this.assetList.SelectedItems.Count > 0)
+            {
+                this.taskList.Items.Clear();
 
-            this.addTskBtn.Enabled = true;
-            this.remTskBtn.Enabled = true;
+                this.RefreshTaskList();
+                this.addTskBtn.Enabled = true;
+                this.remTskBtn.Enabled = true;
+            }
         }
 
         private void assetList_DoubleClick(object sender, EventArgs e)

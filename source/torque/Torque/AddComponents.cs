@@ -100,6 +100,65 @@ namespace Torque
                     try
                     {
                         this.mainWindow.projDB.Insert("assets", insertHash);
+                        // Also, get the assetid while you're at it...
+                        List<Hashtable> assets = this.mainWindow.projDB.Select(new List<string> { "assetid" }, "assets", insertHash);
+                        int assetId = Convert.ToInt32(assets[0]["assetid"]);
+
+                        // And let's create the tasks for this asset....
+                        Hashtable deptSelector = new Hashtable();
+                        deptSelector.Add("CategoryID", this.foreignKeyList[1]);
+                        List<Hashtable> depts = this.mainWindow.projDB.Select(new List<string> { "DepartmentName", "DepartmentID" }, "category_depts", deptSelector);
+                        // we can continue using the insertHash itself....just get rid of the asset specific fields
+                        insertHash.Remove("assetname");
+                        insertHash.Remove("assetcode");
+                        insertHash.Remove("assetisrelevant");
+
+                        // Adding the default "Unassigned" user...all tasks
+                        // will start off as unassigned.
+                        insertHash.Add("assetid", assetId);
+                        insertHash.Add("statusid", 1);
+
+                        foreach (Hashtable dept in depts)
+                        {
+                            if (insertHash.ContainsKey("departmentid"))
+                            {
+                                insertHash.Remove("departmentid");
+                            }
+                            insertHash.Add("departmentid", Convert.ToInt32(dept["DepartmentID"]));
+
+                            if (insertHash.ContainsKey("taskname"))
+                            {
+                                insertHash.Remove("taskname");
+                            }
+                            insertHash.Add("taskname", dept["DepartmentName"].ToString());
+
+                            Hashtable userSelHash = new Hashtable();
+                            userSelHash.Add("DepartmentName", dept["DepartmentName"].ToString());
+                            userSelHash.Add("Username", "unassigned." + dept["DepartmentName"].ToString().ToLower());
+
+                            // Get the default userid and the reviewerid of the default users for this department.
+                            Hashtable usrDetails = this.mainWindow.projDB.Select(new List<string> { "UserID", "ReviewerID" }, "reviewer_details", userSelHash)[0];
+
+                            if (insertHash.ContainsKey("userid"))
+                            {
+                                insertHash.Remove("userid");
+                            }
+                            insertHash.Add("userid", Convert.ToInt32(usrDetails["UserID"]));
+
+                            if (insertHash.ContainsKey("reviewerid"))
+                            {
+                                insertHash.Remove("reviewerid");
+                            }
+                            insertHash.Add("reviewerid", Convert.ToInt32(usrDetails["ReviewerID"]));
+
+                            if (insertHash.ContainsKey("username"))
+                            {
+                                insertHash.Remove("username");
+                            }
+                            insertHash.Add("username", "unassigned." + dept["DepartmentName"].ToString().ToLower());
+
+                            this.mainWindow.projDB.Insert("tasks", insertHash);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -115,11 +174,31 @@ namespace Torque
                 {
                     insertHash.Add("departmentname", this.nameTxtBox.Text);
                     insertHash.Add("departmentcode", this.codeTxtBox.Text);
+                    
+                    // We will also create an unassigned user for this department; this will be the default user
+                    // this task is assigned to. Production can later change this from unassigned to whoever is available.
+                    Hashtable users = new Hashtable();
+                    users.Add("username", "unassigned." + this.nameTxtBox.Text.ToLower());
+
+                    Hashtable reviewers = new Hashtable();
+                    reviewers.Add("username", "unassigned." + this.nameTxtBox.Text.ToLower());
 
                     this.mainWindow.projDB.OpenConnection();
                     try
                     {
                         this.mainWindow.projDB.Insert("departments", insertHash);
+
+                        // Also, add the unassigned user of this particular department.
+                        int deptId = Convert.ToInt32(this.mainWindow.projDB.Select(new List<string> { }, "departments", insertHash)[0]["departmentid"]);
+                        users.Add("departmentid", deptId);
+
+                        this.mainWindow.projDB.Insert("users", users);
+                        Hashtable user = this.mainWindow.projDB.Select(new List<string> { "userid" }, "users", users)[0];
+                        reviewers.Add("userid", Convert.ToInt32(user["userid"]));
+                        reviewers.Add("departmentid", deptId);
+
+                        // And add the unassigned reviewer...
+                        this.mainWindow.projDB.Insert("reviewers", reviewers);
                     }
                     catch (Exception ex)
                     {
