@@ -35,6 +35,7 @@ namespace Torque
         public TorqueMainWindow()
         {            
             InitializeComponent();
+            this.projectDataView.ReadOnly = true;
             // Init the Torque Toolbar
 
             // 
@@ -70,21 +71,6 @@ namespace Torque
         {
             AddSegmentsForm addSeg = new AddSegmentsForm(this);            
             addSeg.ShowDialog();
-        }
-
-        private void segmentNameList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.segmentNameList.SelectedItems.Count > 0)
-            {
-                this.assetCategoryList.Items.Clear();
-                this.assetGroupsList.Items.Clear();
-                this.assetList.Items.Clear();
-                this.taskList.Items.Clear();
-
-                RefreshCategoriesList();
-                this.addCatBtn.Enabled = true;
-                this.remCatBtn.Enabled = true;
-            }            
         }
         
         public void RefreshSegmentList()
@@ -286,6 +272,51 @@ namespace Torque
             }
         }
 
+        public void RefreshProjectDataView()
+        {
+            this.projectDataView.DataSource = null;
+            this.projectDataView.Refresh();
+
+            string selString = "SELECT * FROM segment_task_details WHERE SegmentName=\"" + this.segmentNameList.SelectedItem.ToString() + "\"";
+            if (this.assetCategoryList.SelectedItems.Count > 0)
+            {
+                selString += " AND CategoryName=\"" + this.assetCategoryList.SelectedItem.ToString() + "\"";
+            }
+            if (this.assetGroupsList.SelectedItems.Count > 0)
+            {
+                selString += " AND GroupName=\"" + this.assetGroupsList.SelectedItem.ToString() + "\"";
+            }
+            if (this.assetList.SelectedItems.Count > 0)
+            {
+                selString += " AND AssetName=\"" + this.assetList.SelectedItem.ToString() + "\"";
+            }
+            selString += ";";
+
+            this.projDB.OpenConnection();
+            MySql.Data.MySqlClient.MySqlDataAdapter data = new MySql.Data.MySqlClient.MySqlDataAdapter(selString, this.projDB.connection);
+
+            DataSet ds = new DataSet();
+            data.Fill(ds);
+            this.projectDataView.DataSource = ds.Tables[0];
+            this.projDB.CloseConnection();
+        }
+
+        private void segmentNameList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.segmentNameList.SelectedItems.Count > 0)
+            {
+                this.assetCategoryList.Items.Clear();
+                this.assetGroupsList.Items.Clear();
+                this.assetList.Items.Clear();
+                this.taskList.Items.Clear();
+
+                RefreshCategoriesList();
+                this.RefreshProjectDataView();
+                this.addCatBtn.Enabled = true;
+                this.remCatBtn.Enabled = true;
+            }
+        }
+
         private void segmentNameList_DoubleClick(object sender, EventArgs e)
         {
             AddSegmentsForm addSeg = new AddSegmentsForm(this, mode: WindowMode.Edit);
@@ -301,6 +332,7 @@ namespace Torque
                 this.taskList.Items.Clear();
 
                 RefreshGroupsList();
+                this.RefreshProjectDataView();
                 this.addGrpBtn.Enabled = true;
                 this.remGrpBtn.Enabled = true;
             }
@@ -320,6 +352,7 @@ namespace Torque
                 this.taskList.Items.Clear();
 
                 RefreshAssetList();
+                this.RefreshProjectDataView();
                 this.addAstBtn.Enabled = true;
                 this.remAstBtn.Enabled = true;
             }
@@ -337,6 +370,7 @@ namespace Torque
                 this.taskList.Items.Clear();
 
                 this.RefreshTaskList();
+                this.RefreshProjectDataView();
                 this.addTskBtn.Enabled = true;
                 this.remTskBtn.Enabled = true;
             }
