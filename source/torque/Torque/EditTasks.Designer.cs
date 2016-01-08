@@ -246,6 +246,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditTasks";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Tasks";
             ((System.ComponentModel.ISupportInitialize)(this.frmrateSpnr)).EndInit();
             this.ResumeLayout(false);

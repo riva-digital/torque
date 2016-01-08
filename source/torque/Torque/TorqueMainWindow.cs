@@ -58,6 +58,8 @@ namespace Torque
             this.raOneToolStripMenuItem.Text = "RaOne";
             this.raOneToolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem_Click);
 
+            this.taskList.DoubleClick += new System.EventHandler(this.taskList_DoubleClick);
+
             this.SetProjDatabase();
             RefreshSegmentList();
         }
@@ -388,7 +390,8 @@ namespace Torque
 
         private void taskList_DoubleClick(object sender, EventArgs e)
         {
-
+            EditTasks editTasksWin = new EditTasks(this);
+            editTasksWin.ShowDialog();
         }
 
         private void addCatBtn_Click(object sender, EventArgs e)
