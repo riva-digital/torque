@@ -295,7 +295,7 @@ namespace Torque
             selString += ";";
 
             this.projDB.OpenConnection(true);
-            MySql.Data.MySqlClient.MySqlDataAdapter data = new MySql.Data.MySqlClient.MySqlDataAdapter(selString, this.projDB.readConnection);
+            MySql.Data.MySqlClient.MySqlDataAdapter data = new MySql.Data.MySqlClient.MySqlDataAdapter(selString, this.projDB.connection);
 
             DataSet ds = new DataSet();
             data.Fill(ds);

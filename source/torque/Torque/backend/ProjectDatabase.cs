@@ -17,12 +17,13 @@ namespace Torque.backend
     public class ProjectDatabase
     {
         public MySqlConnection connection;
-        public MySqlConnection readConnection;
         private string server;
         private string readserver;
         private string database;
         private string uid;
         private string password;
+        private string connectionString;
+        private string readConnString;
 
         public ProjectDatabase(string host = "localhost", string db = "prototype", 
                                string uid = "root", string pwd = "root", string readhost = "gfx61")
@@ -39,11 +40,10 @@ namespace Torque.backend
             this.password = pwd;
             this.readserver = readhost;
 
-            string connectionString = "SERVER=" + this.server + ";" + "UID=" + this.uid + ";" + "PASSWORD=" + this.password + ";";
-            string readConnString = "SERVER=" + this.readserver + ";" + "UID=" + this.uid + ";" + "PASSWORD=" + this.password + ";";
+            this.connectionString = "server=" + this.server + ";" + "user id=" + this.uid + ";" + "password=" + this.password + ";";
+            this.readConnString = "server=" + this.readserver + ";" + "user id=" + this.uid + ";" + "password=" + this.password + ";";
 
-            this.connection = new MySqlConnection(connectionString);
-            this.readConnection = new MySqlConnection(readConnString);
+            this.connection = new MySqlConnection(this.connectionString);
         }
 
         public void SetDatabase(string database)
@@ -55,14 +55,11 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode)
+                if (readMode && this.connection.ConnectionString != this.readConnString)
                 {
-                    this.readConnection.Open();
+                    this.connection.ConnectionString = this.readConnString;
                 }
-                else
-                {
-                    this.connection.Open();
-                }
+                this.connection.Open();
                 return true;
             }
             catch (MySqlException ex)
@@ -75,7 +72,22 @@ namespace Torque.backend
                 switch (ex.Number)
                 {
                     case 0:
-                        MessageBox.Show("Cannot connect to server. Contact admin.");
+                        // Ok, here's the thing. If, for some reason you can't reach the
+                        // mirror, try the main server directly. This will make things
+                        // *potentially* slow.
+                        if (readMode)
+                        {
+                            try
+                            {
+                                this.connection.ConnectionString = this.connectionString;
+                                this.connection.Open();
+                                return true;
+                            }
+                            catch (MySqlException ex2)
+                            {
+                                MessageBox.Show("Cannot connect to server. Contact admin.");
+                            }
+                        }
                         break;
                     case 1045:
                         MessageBox.Show("Invalid username/password. Please try again.");
@@ -89,14 +101,11 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode)
+                if (readMode && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
                 {
-                    this.readConnection.Close();
+                    this.connection.ConnectionString = this.readConnString;
                 }
-                else
-                {
-                    this.connection.Close();
-                }
+                this.connection.Close();
                 return true;
             }
             catch (MySqlException ex)
@@ -166,7 +175,7 @@ namespace Torque.backend
             }
             updateCmd += ";";
             
-            MySqlCommand cmd = new MySqlCommand(updateCmd, this.readConnection);
+            MySqlCommand cmd = new MySqlCommand(updateCmd, this.connection);
 
             foreach (string key in columnVals.Keys)
             {
@@ -229,8 +238,8 @@ namespace Torque.backend
                 selectCmd = selectCmd.Remove(selectCmd.Length - 5);
             }
             selectCmd += ";";
-
-            MySqlCommand cmd = new MySqlCommand(selectCmd, this.readConnection);
+            
+            MySqlCommand cmd = new MySqlCommand(selectCmd, this.connection);
 
             if (columnVals.Count != 0)
             {
