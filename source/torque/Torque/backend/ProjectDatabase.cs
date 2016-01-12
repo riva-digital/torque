@@ -106,7 +106,7 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode && this.readHostNotFound && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
+                if (readMode && !this.readHostNotFound && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
                 {
                     this.connection.ConnectionString = this.readConnString;
                 }
