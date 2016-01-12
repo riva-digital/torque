@@ -191,6 +191,15 @@ namespace Torque
                         // Also, add the unassigned user of this particular department.
                         int deptId = Convert.ToInt32(this.mainWindow.projDB.Select(new List<string> { }, "departments", insertHash)[0]["departmentid"]);
                         users.Add("departmentid", deptId);
+                        users.Add("empcode", "");
+                        users.Add("firstname", "");
+                        users.Add("lastname", "");
+                        users.Add("password", "");
+                        users.Add("email", "");
+                        users.Add("phone", 0);
+                        users.Add("alternatecontact", 0);
+                        users.Add("userrole", "unassigned");
+                        users.Add("userlocation", "");
 
                         this.mainWindow.projDB.Insert("users", users);
                         Hashtable user = this.mainWindow.projDB.Select(new List<string> { "userid" }, "users", users)[0];
