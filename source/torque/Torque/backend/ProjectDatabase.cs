@@ -24,6 +24,7 @@ namespace Torque.backend
         private string password;
         private string connectionString;
         private string readConnString;
+        private bool readHostNotFound = false;
 
         public ProjectDatabase(string host = "localhost", string db = "prototype", 
                                string uid = "root", string pwd = "root", string readhost = "gfx61")
@@ -81,6 +82,7 @@ namespace Torque.backend
                             {
                                 this.connection.ConnectionString = this.connectionString;
                                 this.connection.Open();
+                                this.readHostNotFound = true;
                                 return true;
                             }
                             catch (MySqlException ex2)
@@ -101,7 +103,7 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
+                if (readMode && this.readHostNotFound && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
                 {
                     this.connection.ConnectionString = this.readConnString;
                 }
