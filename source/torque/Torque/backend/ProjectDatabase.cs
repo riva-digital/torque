@@ -17,36 +17,52 @@ namespace Torque.backend
     public class ProjectDatabase
     {
         public MySqlConnection connection;
+        public MySqlConnection readConnection;
         private string server;
+        private string readserver;
         private string database;
         private string uid;
         private string password;
 
         public ProjectDatabase(string host = "localhost", string db = "prototype", 
-                               string uid = "root", string pwd = "root")
+                               string uid = "root", string pwd = "root", string readhost = "gfx61")
         {
             Initialize(host, db, uid, pwd);
         }
 
         private void Initialize(string host = "localhost", string db = "prototype",
-                                string dbuser = "root", string pwd = "root")
+                                string dbuser = "root", string pwd = "root", string readhost = "gfx61")
         {
-            server = host;
-            database = db;
-            uid = dbuser;
-            password = pwd;
+            this.server = host;
+            this.database = db;
+            this.uid = dbuser;
+            this.password = pwd;
+            this.readserver = readhost;
 
-            string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-                database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            string connectionString = "SERVER=" + this.server + ";" + "UID=" + this.uid + ";" + "PASSWORD=" + this.password + ";";
+            string readConnString = "SERVER=" + this.readserver + ";" + "UID=" + this.uid + ";" + "PASSWORD=" + this.password + ";";
 
-            connection = new MySqlConnection(connectionString);
+            this.connection = new MySqlConnection(connectionString);
+            this.readConnection = new MySqlConnection(readConnString);
         }
 
-        public bool OpenConnection()
+        public void SetDatabase(string database)
+        {
+            this.database = database;
+        }
+
+        public bool OpenConnection(bool readMode = false)
         {
             try
             {
-                connection.Open();
+                if (readMode)
+                {
+                    this.readConnection.Open();
+                }
+                else
+                {
+                    this.connection.Open();
+                }
                 return true;
             }
             catch (MySqlException ex)
@@ -69,11 +85,18 @@ namespace Torque.backend
             }
         }
 
-        public bool CloseConnection()
+        public bool CloseConnection(bool readMode = false)
         {
             try
             {
-                connection.Close();
+                if (readMode)
+                {
+                    this.readConnection.Close();
+                }
+                else
+                {
+                    this.connection.Close();
+                }
                 return true;
             }
             catch (MySqlException ex)
@@ -85,7 +108,7 @@ namespace Torque.backend
 
         public void Insert(string tableName, Hashtable columnValHash)
         {
-            string insertCmd = "INSERT INTO " + tableName + " (";
+            string insertCmd = "INSERT INTO " + this.database + "." + tableName + " (";
             foreach (string key in columnValHash.Keys)
             {
                 insertCmd += key + ",";
@@ -121,7 +144,7 @@ namespace Torque.backend
             // Syntax:
             // UPDATE tableName SET columnVals[key]=columnVals[value] WHERE keyVals[key]=keyVals[value] AND keyVals[key]=keyVals[value];
             // TO-DO: Add support for OR, AND-OR, OR-AND queries in the WHERE clause
-            string updateCmd = "UPDATE " + tableName + " SET ";
+            string updateCmd = "UPDATE " + this.database + "." + tableName + " SET ";
 
             // Build the SET part of the command
             foreach (string key in columnVals.Keys)
@@ -143,7 +166,7 @@ namespace Torque.backend
             }
             updateCmd += ";";
             
-            MySqlCommand cmd = new MySqlCommand(updateCmd, connection);
+            MySqlCommand cmd = new MySqlCommand(updateCmd, this.readConnection);
 
             foreach (string key in columnVals.Keys)
             {
@@ -193,7 +216,7 @@ namespace Torque.backend
                 selectCmd = selectCmd.Remove(selectCmd.Length - 2);
             }
 
-            selectCmd += " FROM " + tableName;
+            selectCmd += " FROM " + this.database + "." + tableName;
 
             // Add the WHERE clause, if applicable
             if (columnVals.Count != 0)
@@ -207,7 +230,7 @@ namespace Torque.backend
             }
             selectCmd += ";";
 
-            MySqlCommand cmd = new MySqlCommand(selectCmd, connection);
+            MySqlCommand cmd = new MySqlCommand(selectCmd, this.readConnection);
 
             if (columnVals.Count != 0)
             {
@@ -261,6 +284,11 @@ namespace Torque.backend
 
             System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
+        }
+
+        internal string GetDatabase()
+        {
+            return this.database;
         }
     }
 }

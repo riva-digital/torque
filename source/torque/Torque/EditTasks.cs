@@ -40,10 +40,32 @@ namespace Torque
             addReviewer.ShowDialog();
         }
 
-        private void addDeptBtn_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Given a Start Date and Task Duration, calculate when the task will end by excluding
+        /// all the holidays that lie during the duration of task.
+        /// </summary>
+        /// <param name="StartDate"></param>
+        /// <param name="Duration"></param>
+        /// <returns>DateTime EndDate</returns>
+        private DateTime GetEndDate(DateTime StartDate, decimal Duration)
         {
-            AddComponents addDeptWin = new AddComponents(this.mainWindow, addComponent: ComponentType.Department);
-            addDeptWin.ShowDialog();
+            DateTime EndDate = StartDate;
+
+            while (EndDate < StartDate.AddDays(Convert.ToDouble(Duration)))
+            {
+                if (EndDate.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    // Add a day for each Sunday encountered in
+                    // the duration of the task.
+                    Duration += 1;
+                }
+                EndDate = EndDate.AddDays(1);
+            }
+
+            // Remove one day, as man days start on the first day itself.
+            EndDate = EndDate.AddDays(-1);
+
+            return EndDate;
         }
     }
 }

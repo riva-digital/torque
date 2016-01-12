@@ -28,7 +28,7 @@ namespace Torque
     public partial class TorqueMainWindow : Form
     {
 
-        public backend.ProjectDatabase projDB;
+        public backend.ProjectDatabase projDB = new backend.ProjectDatabase(host: "173.194.86.207", uid: "riva-root", pwd: "EzioOnAThursday");
         public Hashtable segmentIds = new Hashtable();
         public AddTasks addTaskWin;
         
@@ -66,7 +66,7 @@ namespace Torque
 
         public void SetProjDatabase(string projectName = "don")
         {
-            this.projDB = new backend.ProjectDatabase("173.194.86.207", projectName, "riva-root", "EzioOnAThursday");
+            this.projDB.SetDatabase(projectName);
         }
 
         private void addSegmentsBtn_Click(object sender, EventArgs e)
@@ -85,7 +85,7 @@ namespace Torque
 
             List<string> columnNames = new List<string>();
             Hashtable keyVals = new Hashtable();
-            this.projDB.OpenConnection();
+            this.projDB.OpenConnection(true);
             try
             {
                 List<Hashtable> segments = this.projDB.Select(columnNames, "segments", keyVals);
@@ -104,7 +104,7 @@ namespace Torque
             }
             finally
             {
-                this.projDB.CloseConnection();
+                this.projDB.CloseConnection(true);
             }
 
             this.addCatBtn.Enabled = false;
@@ -126,7 +126,7 @@ namespace Torque
 
             string selSegment = segmentNameList.SelectedItem.ToString();
 
-            this.projDB.OpenConnection();
+            this.projDB.OpenConnection(true);
             try
             {
                 List<string> columnNames = new List<string>();
@@ -147,7 +147,7 @@ namespace Torque
             }
             finally
             {
-                this.projDB.CloseConnection();
+                this.projDB.CloseConnection(true);
             }
 
             this.addGrpBtn.Enabled = false;
@@ -167,7 +167,7 @@ namespace Torque
             string selSegment = segmentNameList.SelectedItem.ToString();
             string selAssetCat = assetCategoryList.SelectedItem.ToString();
 
-            this.projDB.OpenConnection();
+            this.projDB.OpenConnection(true);
             try
             {
                 List<string> columnNames = new List<string>();
@@ -189,7 +189,7 @@ namespace Torque
             }
             finally
             {
-                this.projDB.CloseConnection();
+                this.projDB.CloseConnection(true);
             }
 
             this.addAstBtn.Enabled = false;
@@ -207,7 +207,7 @@ namespace Torque
             string selAssetCat = this.assetCategoryList.SelectedItem.ToString();
             string selAssetGrp = this.assetGroupsList.SelectedItem.ToString();
 
-            this.projDB.OpenConnection();
+            this.projDB.OpenConnection(true);
             try
             {
                 List<string> columnNames = new List<string>();
@@ -230,7 +230,7 @@ namespace Torque
             }
             finally
             {
-                this.projDB.CloseConnection();
+                this.projDB.CloseConnection(true);
             }
 
             this.addTskBtn.Enabled = false;
@@ -246,7 +246,7 @@ namespace Torque
             string selAssetGrp = this.assetGroupsList.SelectedItem.ToString();
             string selAsset = this.assetList.SelectedItem.ToString();
 
-            this.projDB.OpenConnection();
+            this.projDB.OpenConnection(true);
             try
             {
                 List<string> columnNames = new List<string>();
@@ -270,7 +270,7 @@ namespace Torque
             }
             finally
             {
-                this.projDB.CloseConnection();
+                this.projDB.CloseConnection(true);
             }
         }
 
@@ -279,7 +279,7 @@ namespace Torque
             this.projectDataView.DataSource = null;
             this.projectDataView.Refresh();
 
-            string selString = "SELECT * FROM segment_task_details WHERE SegmentName=\"" + this.segmentNameList.SelectedItem.ToString() + "\"";
+            string selString = "SELECT TaskID, SegmentName, CategoryName, GroupName, AssetName, TaskName, TaskStartDate, TaskEndDate, TaskStatus FROM " + this.projDB.GetDatabase() + ".segment_task_details WHERE SegmentName=\"" + this.segmentNameList.SelectedItem.ToString() + "\"";
             if (this.assetCategoryList.SelectedItems.Count > 0)
             {
                 selString += " AND CategoryName=\"" + this.assetCategoryList.SelectedItem.ToString() + "\"";
@@ -294,13 +294,13 @@ namespace Torque
             }
             selString += ";";
 
-            this.projDB.OpenConnection();
-            MySql.Data.MySqlClient.MySqlDataAdapter data = new MySql.Data.MySqlClient.MySqlDataAdapter(selString, this.projDB.connection);
+            this.projDB.OpenConnection(true);
+            MySql.Data.MySqlClient.MySqlDataAdapter data = new MySql.Data.MySqlClient.MySqlDataAdapter(selString, this.projDB.readConnection);
 
             DataSet ds = new DataSet();
             data.Fill(ds);
             this.projectDataView.DataSource = ds.Tables[0];
-            this.projDB.CloseConnection();
+            this.projDB.CloseConnection(true);
         }
 
         private void segmentNameList_SelectedIndexChanged(object sender, EventArgs e)
