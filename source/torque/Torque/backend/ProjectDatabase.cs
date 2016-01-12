@@ -73,6 +73,9 @@ namespace Torque.backend
                 switch (ex.Number)
                 {
                     case 0:
+                        MessageBox.Show("Cannot connect to server. Contact admin.");
+                        break;
+                    case 1042:
                         // Ok, here's the thing. If, for some reason you can't reach the
                         // mirror, try the main server directly. This will make things
                         // *potentially* slow.
