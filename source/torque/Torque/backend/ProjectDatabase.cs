@@ -56,13 +56,14 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
+                if (readMode)
                 {
                     if (this.connection.State == System.Data.ConnectionState.Open)
                     {
                         this.connection.Close();
                     }
-                    this.connection.ConnectionString = this.readConnString;
+                    if (this.connection.ConnectionString != "server=gfx61;user id=riva-root")
+                        this.connection.ConnectionString = this.readConnString;
                 }
                 else
                 {
