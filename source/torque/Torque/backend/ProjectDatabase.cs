@@ -56,9 +56,22 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode && this.connection.ConnectionString != this.readConnString)
+                if (readMode)
                 {
-                    this.connection.ConnectionString = this.readConnString;
+                    if (this.connection.State == System.Data.ConnectionState.Open)
+                    {
+                        this.connection.Close();
+                    }
+                    if (this.connection.ConnectionString != "server=gfx61;user id=riva-root")
+                        this.connection.ConnectionString = this.readConnString;
+                }
+                else
+                {
+                    if (this.connection.State == System.Data.ConnectionState.Open)
+                    {
+                        this.connection.Close();
+                    }
+                    this.connection.ConnectionString = this.connectionString;
                 }
                 this.connection.Open();
                 return true;
@@ -106,10 +119,6 @@ namespace Torque.backend
         {
             try
             {
-                if (readMode && !this.readHostNotFound && this.connection.ConnectionString != "server=gfx61;user id=riva-root")
-                {
-                    this.connection.ConnectionString = this.readConnString;
-                }
                 this.connection.Close();
                 return true;
             }
