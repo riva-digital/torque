@@ -25,6 +25,56 @@ namespace Torque
         Department
     }
 
+    public struct TSegment
+    {
+        
+    }
+
+    public struct TCategory
+    {
+
+    }
+
+    public struct TGroup
+    {
+
+    }
+
+    public struct TAsset
+    {
+
+    }
+
+    public struct TAssetDetails
+    {
+
+    }
+
+    public struct TTask
+    {
+
+    }
+
+    public struct TTransaction
+    {
+
+    }
+
+    public struct TTaskStatus
+    {
+
+    }
+
+    public struct TUsers
+    {
+
+    }
+
+    public struct TDepartments
+    {
+
+    }
+
     public partial class TorqueMainWindow : Form
     {
 

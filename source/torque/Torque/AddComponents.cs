@@ -118,11 +118,7 @@ namespace Torque
                         insertHash.Remove("assetname");
                         insertHash.Remove("assetcode");
                         insertHash.Remove("assetisrelevant");
-
-                        // Adding the default "Unassigned" user...all tasks
-                        // will start off as unassigned.
                         insertHash.Add("assetid", assetId);
-                        insertHash.Add("statusid", 1);
 
                         // We are basically adding the unassigned user to all these tasks as the
                         // assigned user and the assigned reviewer.
@@ -140,6 +136,20 @@ namespace Torque
                             insertHash.Add("taskname", dept["DepartmentName"].ToString());                            
 
                             this.mainWindow.projDB.Insert("tasks", insertHash);
+
+                            // Also, set the status of this task to YTS by default. For that, we will need to find
+                            // the taskid first.
+                            List<Hashtable> tasks = this.mainWindow.projDB.Select(new List<string> { "taskid" }, "tasks", insertHash);
+                            if (tasks[0].ContainsKey("taskid"))
+                            {
+                                Hashtable taskStatHash = new Hashtable();
+                                taskStatHash.Add("taskid", tasks[0]["taskid"]);
+                                taskStatHash.Add("statusid", 1);
+                                taskStatHash.Add("status", "YTS");
+                                taskStatHash.Add("statusupdatedon", DateTime.Now);
+
+                                this.mainWindow.projDB.Insert("task_has_status", taskStatHash);
+                            }
                         }
                     }
                     catch (Exception ex)
